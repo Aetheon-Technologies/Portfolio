@@ -11,8 +11,12 @@ RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring
 
 # Enable Apache mod_rewrite (for .htaccess)
 RUN a2enmod rewrite
-# Ensure only one MPM is loaded (prefork required for mod_php)
-RUN a2dismod mpm_event mpm_worker 2>/dev/null; a2enmod mpm_prefork
+# Ensure only mpm_prefork is loaded — rm directly since a2dismod can silently fail
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.conf \
+          /etc/apache2/mods-enabled/mpm_event.load \
+          /etc/apache2/mods-enabled/mpm_worker.conf \
+          /etc/apache2/mods-enabled/mpm_worker.load && \
+    a2enmod mpm_prefork
 
 # Allow .htaccess overrides in document root
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
