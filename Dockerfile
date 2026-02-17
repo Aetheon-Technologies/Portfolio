@@ -22,4 +22,9 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html/uploads \
     && chmod -R 755 /var/www/html/uploads
 
-EXPOSE 80
+# Use startup script to configure Apache port from Railway's PORT env var
+COPY docker-start.sh /docker-start.sh
+RUN chmod +x /docker-start.sh
+
+EXPOSE 8080
+CMD ["/docker-start.sh"]
