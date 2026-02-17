@@ -1,0 +1,17 @@
+# Sensitive files — never commit
+.env
+reset-admin.php
+*.log
+*.sql.bak
+
+# Uploads (user-generated content, excluded from git)
+uploads/projects/*
+uploads/blog/*
+!uploads/projects/.gitkeep
+!uploads/blog/.gitkeep
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
