@@ -11,6 +11,8 @@ RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring
 
 # Enable Apache mod_rewrite (for .htaccess)
 RUN a2enmod rewrite
+# Ensure only one MPM is loaded (prefork required for mod_php)
+RUN a2dismod mpm_event mpm_worker 2>/dev/null; a2enmod mpm_prefork
 
 # Allow .htaccess overrides in document root
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
@@ -22,9 +24,6 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html/uploads \
     && chmod -R 755 /var/www/html/uploads
 
-# Use startup script to configure Apache port from Railway's PORT env var
-COPY docker-start.sh /docker-start.sh
-RUN chmod +x /docker-start.sh
-
 EXPOSE 8080
-CMD ["/docker-start.sh"]
+# Configure Apache port from Railway's PORT env var at container startup (inline to avoid CRLF issues)
+CMD ["/bin/bash", "-c", "PORT=${PORT:-8080} && sed -i \"s/Listen 80/Listen $PORT/g\" /etc/apache2/ports.conf && sed -i \"s/<VirtualHost \\*:80>/<VirtualHost *:$PORT>/g\" /etc/apache2/sites-enabled/000-default.conf && exec apache2-foreground"]
