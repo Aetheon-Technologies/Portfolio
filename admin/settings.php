@@ -49,10 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_FILES['resume']['name'])) {
         $file = $_FILES['resume'];
         if ($file['error'] === UPLOAD_ERR_OK) {
-            $allowedMimes = ['application/pdf'];
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $mime  = $finfo->file($file['tmp_name']);
-            if (in_array($mime, $allowedMimes) && $file['size'] <= UPLOAD_MAX_BYTES) {
+            $ext   = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            // Accept application/pdf, application/x-pdf, or octet-stream with .pdf extension
+            // (Windows finfo often returns octet-stream for valid PDFs)
+            $isPdf = in_array($mime, ['application/pdf', 'application/x-pdf'])
+                  || ($mime === 'application/octet-stream' && $ext === 'pdf');
+            if ($isPdf && $file['size'] <= UPLOAD_MAX_BYTES) {
                 $filename = 'resume_' . time() . '.pdf';
                 $dest     = SITE_ROOT . '/uploads/' . $filename;
                 if (move_uploaded_file($file['tmp_name'], $dest)) {
