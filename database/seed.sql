@@ -94,6 +94,6 @@ INSERT INTO blog_posts (title, slug, excerpt, body, read_time, tags, status, pub
 -- Generate a new hash: php -r "echo password_hash('yourpassword', PASSWORD_BCRYPT);"
 -- --------------------------------------------------------
 INSERT INTO admin_users (username, password_hash) VALUES
-    ('admin', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi')
+    ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi')
 ON DUPLICATE KEY UPDATE username = username;
--- Note: default password above is 'changeme123' — change it!
+-- Note: default password above is 'password' — change it immediately via admin panel!
