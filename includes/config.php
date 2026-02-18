@@ -14,11 +14,13 @@ define('DB_CHARSET', 'utf8mb4');
 
 // ── Paths ─────────────────────────────────────────────────────────────────────
 define('SITE_ROOT', dirname(__DIR__));          // Absolute filesystem path
-define('BASE_URL',  getenv('BASE_URL') ?: '/portfolio');  // '' on Railway root, '/portfolio' for XAMPP
 
 // ── Environment ───────────────────────────────────────────────────────────────
-$isProduction = (bool) getenv('RAILWAY_ENVIRONMENT');
+// RAILWAY_ENVIRONMENT_NAME is auto-set by Railway; RAILWAY_ENVIRONMENT is a manual fallback
+$isProduction = (bool) (getenv('RAILWAY_ENVIRONMENT_NAME') ?: getenv('RAILWAY_ENVIRONMENT'));
 define('DEV_MODE', !$isProduction);
+
+define('BASE_URL', $isProduction ? '' : '/portfolio');  // '' on Railway root, '/portfolio' for XAMPP
 
 if (DEV_MODE) {
     ini_set('display_errors', '1');
