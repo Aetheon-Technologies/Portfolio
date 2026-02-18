@@ -29,7 +29,7 @@ RUN sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf && \
          -exec sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/g' {} +
 
 # Verify Apache config is valid — build fails here with clear output if broken
-RUN apache2 -t
+RUN apache2ctl -t
 
 # Copy app files
 COPY . /var/www/html/
