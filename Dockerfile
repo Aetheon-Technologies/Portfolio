@@ -1,4 +1,4 @@
-FROM php:8.3-apache
+FROM php:8.3-apache-bookworm
 
 # Prevent apache2 from being upgraded (which would reset MPM config to mpm_event)
 RUN apt-mark hold apache2 apache2-bin apache2-data
