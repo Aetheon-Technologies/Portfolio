@@ -149,7 +149,7 @@ require_once __DIR__ . '/includes/header.php';
 
                 <?php if (get_setting('resume_url')): ?>
                 <div data-reveal>
-                    <a href="<?= sanitize_url(get_setting('resume_url')) ?>"
+                    <a href="<?= htmlspecialchars(get_setting('resume_url')) ?>"
                        class="btn btn--outline"
                        download
                        rel="noopener">
