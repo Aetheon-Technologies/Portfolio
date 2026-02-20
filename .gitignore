@@ -4,11 +4,8 @@ reset-admin.php
 *.log
 *.sql.bak
 
-# Uploads (user-generated content, excluded from git)
-uploads/projects/*
-uploads/blog/*
-!uploads/projects/.gitkeep
-!uploads/blog/.gitkeep
+# Uploads — track images so they persist across Railway deploys
+# Only exclude large or sensitive files if needed
 
 # OS / editor noise
 .DS_Store

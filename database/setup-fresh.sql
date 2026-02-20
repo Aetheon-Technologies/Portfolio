@@ -123,7 +123,7 @@ INSERT INTO settings (setting_key, value) VALUES
     ('about_bio_1',       'I''m a fullstack developer and robotics engineer with a passion for crafting systems that bridge the digital and physical world. From responsive web interfaces to embedded hardware control, I enjoy working across the full technology stack.'),
     ('about_bio_2',       'When I''m not writing code, I am learning AI, robotic prototyping with microcontrollers, or exploring new frameworks. I believe the best software is built with clarity, purpose, and attention to detail.'),
     ('resume_url',        ''),
-    ('profile_image',     ''),
+    ('profile_image',     '/uploads/profile_matthew.jpeg'),
     ('stat_years',        '4+'),
     ('stat_projects',     '5+'),
     ('stat_technologies', '15+'),
